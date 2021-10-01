@@ -1,0 +1,88 @@
+sTUTORIAL KONFIGURASI DNS SERVER
+
+Settingan Jaringan di VirtualBox :
+Adapter 1 : Host Only
+Adapter 2 : NAT
+
+--> Masuk ke interfaces dengan perintah 'nano /etc/network/interfaces'
+--> Tambah eth1
+allow-hotplug blablabla --> ganti jadi 'auto eth0'
+iface eth0 inet static
+	address 192.168.1.1
+	netmask 255.255.255.0
+	network 192.168.1.0
+	broadcast 192.168.1.255
+auto eth1
+iface eth1 inet dhcp
+
+--> reboot or 'service networking restart'
+--> cek ethernet 'ifconfig'
+--> install bind 9 'apt-get install bind9'
+--> masuk ke bind  'cd /etc/bind'
+--> ketikan perintah 'nano named.conf.local'
+--> Tambahkan di paling bawah :
+	zone "wahyu.net" {
+		type master;
+		file "/etc/bind/db.wahyu";
+	};
+	zone "1.168.192.in-addr.arpa" {
+		type master;
+		file "/etc/bind/db.192";
+	};
+      Kemudian ctrl+x (save) --> Enter
+--> cp db.local db.wahyu
+--> cp db.127 db.192
+--> Ketik Perintah 'nano db.wahyu'
+      Ubah localhost menjadi domain anda ex: 'wahyu.net. root.wahyu.net.' pada bagian atas
+      Ubah Bagian Bawah menjadi :
+      @	IN	NS	wahyu.net.
+      @	IN	A	192.168.1.1
+      ns	IN	A	192.168.1.1
+      www	IN	A	192.168.1.1
+      mail	IN	A	192.168.1.1
+      Kemudian ctrl+x (save) --> Enter
+--> Ketik Perintah 'nano db.192'
+      Ubah localhost menjadi domain anda ex: 'wahyu.net. root.wahyu.net.' pada bagian atas
+      Ubah Bagian Bawah menjadi :
+      @	IN	NS	wahyu.net.
+      1	IN	PTR	192.168.1.1
+      1	IN	PTR	ns.wahyu.net.
+      1	IN	PTR	www.wahyu.net.
+      1	IN	PTR	mail.wahyu.net.
+      Kemudian ctrl+x (save) --> Enter
+--> ketik perintah 'nano /etc/resolv.conf' Jika Kosong, tuliskan 'search wahyu.net' enter 'nameserver 192.168.1.1', Jika ada isi nya hapus saja, 
+      kemudian isikan yang tadi
+--> restart bind9 dengan perintah 'service bind9 restart'
+--> lakukan ujicoba dengan nslookup, perintah nya : 'nslookup wahyu.net' or 'nslookup 192.168.1.1' or 'nslookup www.wahyu.net'
+
+SEMOGA BERHASIL
+================
+
+TUTORIAL KONFIGURASI WEB SERVER
+
+--> install apache2 'apt-get install apache2'
+--> masuk ke direktori 'cd /etc/apache2/sites-available'
+--> kemudian ketik perintah 'ls' untuk melihat isi direktori
+--> copykan default ke folder yang akan anda buat, contoh : 'cp default wahyu'
+--> Buka file wahyu, 'nano wahyu'
+      Tambahkan di paling atas 'NameVirtualHost www.wahyu.net:80'
+      Ubah <VirtualHost :*80> menjadi <VirtualHost www.wahyu.net:80>
+      tambahkan 'ServerName wahyu.net' di bawah 'ServerAdmin webmaster@localhost'
+      tambahkan 'wahyu' di 'DocumentRoot "/var/www/wahyu <-- tambahkan ini"'
+      kemudian save
+--> Masuk ke 'cd /var/www'
+--> mkdir wahyu
+--> Buat File html 'nano /var/www/wahyu/index.html'
+--> Isikan Codingan HTML Anda, kemudian save
+--> ketik perintah 'a2ensite wahyu'
+--> reload apache 'service apache2 reload'
+--> Cek di browser, atau jika menggunakan debian berbasis text, ketikan perintah links www.wahyu.net (install links terlebih dahulu dengan
+       perintah apt-get install links)
+
+SEMOGA BERHASIL
+================
+
+TUTORIAL KONFIGURASI MAIL SERVER (SQUIRRELMAIL)
+
+--> install apt-get install squirrel mail postfix courier-pop courier-imap
+--> 

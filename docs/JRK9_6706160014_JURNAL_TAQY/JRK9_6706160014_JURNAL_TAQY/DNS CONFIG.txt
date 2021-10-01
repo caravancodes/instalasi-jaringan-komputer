@@ -1,0 +1,67 @@
+sudo apt-get install vsftpd
+sudo nano / etc/vsftpd.conf
+
+anonymous_enable=no
+local_enable = yes
+write_enable = yes
+chroot_local_user
+mkdir/home/username/files
+chown root:root/home/username
+sudo service vsftpd restart
+
+/etc/hosts
+
+apt-get install bind9
+cd /etc/bind
+ls /etc/bind
+nano named.conf.default-zones
+cp db.locat db.myhost
+cp db.127 db.192
+
+
+nano db.myhost // masuk db.myhost
+nano db.192 // masuk db.192
+
+ganti semua localhost dengan myhost
+
+cd /etc/init.d/bind9
+etc/init.d/bind9 restart
+
+
+
+
+->>> CONFIG DNS (JURNAL)
+//cek hostname hostname
+ifconfig
+ifconfig eth0 192.168.10.1/24
+pico /etc/network/interfaces
+--picture 1--
+service networking restart
+
+apt-get install bind9
+cd /etc/bind
+pico named.conf.default-zones
+--picture 2--
+cp db.local db.02
+cp db.local db.192
+pico db.02 // masuk db.02
+--picture 3--
+pico db.192 // masuk db.192
+--picture 4--
+
+pico /etc/resolv.conf
+--picture 5--
+service bind9 restart
+nslookup www.amir0014.com
+--picture 6--
+apt-get install lynx / jika security eror pake ping aja
+apt-get install apache2
+
+lynx www.d3if4002.com / ping www.amir0014.com
+
+
+->>> Config FTP Server
+
+apt-get install proftpd
+cd /etc/proftpd
+cp proftpd.conf proftpd.conf.bak

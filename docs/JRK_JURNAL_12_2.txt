@@ -1,0 +1,12 @@
+Proxy Term
+- ACL
+  acl => IP
+  acl 192.168.1.1/24
+- HTTP Access
+- Allow
+- Deny
+- srcdomain
+- dstdomain
+- delay_pools
+- delay_class
+- delay_parameter

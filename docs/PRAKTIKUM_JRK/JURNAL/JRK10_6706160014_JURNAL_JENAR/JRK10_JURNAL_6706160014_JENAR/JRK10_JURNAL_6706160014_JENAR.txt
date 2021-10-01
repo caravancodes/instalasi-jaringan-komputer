@@ -1,0 +1,117 @@
+MUHAMMAD FAISAL AMIR
+6706160014
+D3IF-40-02
+
+root@debian$ su
+
+
+/---SETTING DNS SERVER---/
+root@debian:/home/debian# nano /etc/network/interfaces
+--edit file--
+auto eth0
+iface eth0 inet static
+-->gambar 1
+auto eth1
+iface eth1 inet dhcp
+--edit-file--
+
+root@debian:/home/debian# service networking restart
+-->gambar 2
+root@debian:/home/debian# ifconfig -a
+-->gambar 3
+
+root@debian:/home/debian# ifconfig eth0 192.168.20.1/24
+root@debian:/home/debian# nano /etc/network/interfaces
+--edit file--
+auto eth0
+iface eth0 inet static
+	address 192.168.20.1
+	network 192.168.20.0
+	netmask 255.255.255.0
+	broadcast 192.168.20.255
+-->gambar 4
+auto eth1
+iface eth1 inet dhcp
+--edit-file--
+
+root@debian:/home/debian# service networking restart
+root@debian:/home/debian# apt-get install bind9
+root@debian:/home/debian# cd /
+
+root@debian:/# cd /etc/bind/
+
+root@debian:/etc/bind# pico named.conf.default-zones
+-->gambar 5
+root@debian:/etc/bind# hostname /*cek hostname*/
+root@debian:/etc/bind# cp db.local db.4002
+root@debian:/etc/bind# pico db.4002
+--edit file--
+-->gambar 6
+root@debian:/etc/bind# cp db.4002 db.192
+root@debian:/etc/bind# pico db.192
+-->gambar 7
+root@debian:/etc/bind# pico /etc/resolv.conf
+-->gambar 8
+root@debian:/etc/bind# service bind 9 restart
+root@debian:/etc/bind# nslookup amirisback.com
+root@debian:/etc/bind# nslookup mail.amirisback.com
+root@debian:/etc/bind# apt-get install apache2
+
+
+/---SETTING MAIL SERVER---/
+root@debian:/etc/bind# mkdir /var/www/amir
+root@debian:/etc/bind# chmod -R 777 /var/www/amir
+root@debian:/etc/bind# pico /var/www/amir/index.html
+root@debian:/etc/bind# cd /etc/apache2/sites-available/
+root@debian:/etc/apache2/sites-available# ls 
+root@debian:/etc/apache2/sites-available# cp default amir
+root@debian:/etc/apache2/sites-available# pico amir
+--edit file--
+-->gambar 9
+tambahkan NameVirtualHost www.amirisback.com:80
+tambahkan <VirtualHost www.amirisback.com:80>
+tambahkan ServerName debian
+tambahkan DocumentRoot /var/www/amir
+--edit file--
+root@debian:/etc/apache2/sites-available# a2ensite amir
+root@debian:/etc/apache2/sites-available# service apache2 reload
+root@debian:/etc/apache2/sites-available# a2ensite amir
+root@debian:/etc/apache2/sites-available# apt-get install postfix
+-->gambar 10
+root@debian:/etc/apache2/sites-available# apt-get install courier-imap
+root@debian:/etc/apache2/sites-available# apt-get install courier-pop
+-->gambar 11
+root@debian:/etc/apache2/sites-available# apt-get install squirrelmail
+
+root@debian:/etc/apache2/sites-available# maildirmake /etc/skel/Maildir
+root@debian:/etc/apache2/sites-available# adduser frogoboc /*pw = amir*/
+root@debian:/etc/apache2/sites-available# adduser xeonranger /*pw = amir*/
+root@debian:/etc/apache2/sites-available# dpkg-reconfigure postfix
+root@debian:/etc/apache2/sites-available# pico /etc/postfix/main.cf
+--edit file--
+tambahkan home_mailbox = Maildir/   /*di akhir line*/
+--edit file
+root@debian:/etc/apache2/sites-available# service postfix restart
+root@debian:/etc/apache2/sites-available# service courier-imap restart
+root@debian:/etc/apache2/sites-available# service courier-pop restart
+root@debian:/etc/apache2/sites-available# squirrelmail-configure
+comand >> 2 
+comand >> 1 pilih amirisback.com 
+comand >> A 
+comand >> 8 pilih courier
+comand >> s 
+comand >> q
+root@debian:/etc/apache2/sites-available# cp amir mail
+root@debian:/etc/apache2/sites-available# pico mail
+--edit file--
+-->gambar 16
+tambahkan NameVirtualHost mail.amirisback.com:80
+tambahkan <VirtualHost mail.amirisback.com:80>
+tambahkan ServerName mail.amirisback.com
+tambahkan DocumentRoot /usr/share/squirrelmail
+--edit file--
+root@debian:/etc/apache2/sites-available# service apache2 restart
+root@debian:/etc/apache2/sites-available# service apache2 reload
+root@debian:/etc/apache2/sites-available# a2ensite mail
+
+

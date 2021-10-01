@@ -1,0 +1,26 @@
+0014-1
+Router(config)#router RIP
+Router(config-router)#version 2
+no auto-summary
+Router(config-router)#network 192.168.10.0
+Router(config-router)#network 192.168.10.136
+Router(config-router)#network 192.168.10.128
+do write
+
+0014-2
+Router(config)#router RIP
+Router(config-router)#version 2
+no auto-summary
+Router(config-router)#network 192.168.10.64
+Router(config-router)#network 192.168.10.132
+Router(config-router)#network 192.168.10.128
+do write
+
+0014-3
+Router(config)#router RIP
+Router(config-router)#version 2
+no auto-summary
+Router(config-router)#network 192.168.10.136
+Router(config-router)#network 192.168.10.132
+Router(config-router)#network 192.168.10.96
+do write

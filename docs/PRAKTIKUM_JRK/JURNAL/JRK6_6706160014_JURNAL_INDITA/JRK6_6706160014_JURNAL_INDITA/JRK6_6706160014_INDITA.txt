@@ -1,0 +1,58 @@
+router rip
+version 2
+network [network connected]
+
+router ospf 1
+network [ip network connect] [255.255.255.255 - subnet mask tujuan] [area tujuan]
+
+
+Semua Network untuk OSPF
+192.168.11.0    0.0.0.255
+192.168.12.0    0.0.0.127
+192.168.12.128  0.0.0.127
+192.168.13.0    0.0.0.63
+192.168.13.64   0.0.0.3
+192.168.13.68   0.0.0.3
+192.168.13.72   0.0.0.3
+192.168.13.76   0.0.0.3
+192.168.13.80   0.0.0.3
+192.168.13.84   0.0.0.
+
+
+
+int fa1/1
+sw mode access
+sw access vlan 12
+
+kalo switch switch
+sw mode trunk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+interface set ether1 name=Public
+interface set ether2 name=Local
+
+system identity set name=6706160014
+ip address add address=

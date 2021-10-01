@@ -1,0 +1,16 @@
+1.Wlan yaitu singkatan dari wireless local area network, yaitu koneksi lokal area tanpa kabel, melainkan menyambungkan dengan gelombang radio, wlan biasanya disebut wireless / jaringan nirkabel.
+2.Koneksi tanpa ada access point. Jadi data lebih cepat diterima tanpa perantara
+3.Configurasi Router jaringan Wlan
+
+
+Router#config t
+Router(config)#interface fa0/0
+Router(config-if)#ip address [ip address] [subnetmask]
+Router(config-if)#no shut
+Router(config-if)#ex
+Router(config)#ip dhcp pool SIMULATION
+Router(dhcp-config)#default-router [ip address]
+Router(dhcp-config)#network [network] [subnetmask]
+Router(dhcp-config)#dns-server [ip address]// tidak dipakai jika wireless router
+Router(dhcp-config)#end
+Router#copy run start
